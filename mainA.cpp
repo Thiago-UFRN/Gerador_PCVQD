@@ -266,57 +266,6 @@ int main(int argc, char *argv[]) {
 		bonus[i] = floor(bonus[i]);
 	}
 
-	sort(bonus.begin(), bonus.end());
-
-	vector<pair<int, double>> vertices;
-	vertices.reserve(n);
-
-	for (int i = 0; i < n; i++) {
-		vertices.push_back(pair<int, double>(i, 0.0));
-	}
-
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			vertices[i].second += custo[i][j];
-		}
-	}
-
-	vertices[0].second = 0.0;
-
-	vector<pair<int, double>> vertices_bonus;
-
-	for(int k = 0; k < n; k++) {
-		double soma = 0.0;
-		for (int j = 0; j < n-k; j++) {
-			soma += vertices[j].second;
-		}
-
-		double aleatorio = randDouble(0, soma);
-
-		int escolhido = 0;
-		soma = 0.0;
-
-		for (int i = 0; i < n-k; i++) {
-			soma += vertices[i].second;
-			if(soma >= aleatorio) {
-				escolhido = i;
-				break;
-			}
-		}
-
-		if(vertices[escolhido].first == 0) {
-			//cauda += to_string(vertices[escolhido].first) + " " + to_string(0) + " " + to_string(0) + "\n";
-			vertices_bonus.push_back(pair<int, double>(vertices[escolhido].first, 0.0));
-		} else {
-			//cauda += to_string(vertices[escolhido].first) + " " + to_string(bonus.back()) + " " + to_string(util.randInt(20, 50)) + "\n";]
-			vertices_bonus.push_back(pair<int, double>(vertices[escolhido].first, bonus.back()));
-		}
-
-		std::swap(vertices[escolhido], vertices.back());
-		vertices.pop_back();
-		bonus.pop_back();
-	}
-
 	double quota = 0.0;
 
 	for(int i = 0; i < n; i++) {
@@ -359,12 +308,11 @@ int main(int argc, char *argv[]) {
 
 	cout << quota << endl << endl;
 
+	bonus[0] = 0.0;
+	delay[0] = 0.0;
+
 	for(int i = 0; i < n; i++) {
-		if(vertices_bonus[i].first == 0) {
-			cout << vertices_bonus[i].first << " " << vertices_bonus[i].second << " " << 0.0 << endl;
-		} else {
-			cout << vertices_bonus[i].first << " " << vertices_bonus[i].second << " " << delay[i] << endl;
-		}
+		cout << i << " " << bonus[i] << " " << delay[i] << endl;
 	}
 
 	return 0;
